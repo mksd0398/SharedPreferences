@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var privateMode = 0
     private val prefValue = "truefalse"
     private val prefName = "edittext"
-    private lateinit var mSharedPref: SharedPreferences
+    private lateinit var mSharedPref: SharedPreferenceInstance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         mInitWidgets()
         mInitObjects()
 
-        if(mSharedPref.getBoolean(prefValue , false)){
-            Log.i("preference value", mSharedPref.getString(prefName,"").toString())
-            mEtPreference.setText(mSharedPref.getString(prefName,""))
+        if(mSharedPref.getSomeStringValue(applicationContext) != null){
+            mEtPreference.setText(mSharedPref.getSomeStringValue(applicationContext))
         }
 
         mEtPreference.addTextChangedListener(object : TextWatcher {
@@ -43,20 +42,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                val editor = mSharedPref.edit()
-                editor.putBoolean(prefValue, true)
-                editor.putString(prefName, "$s")
-                editor.apply()
+                mSharedPref.setSomeStringValue(applicationContext,"$s")
             }
         })
         mBtnReset.setOnClickListener{
             mEtPreference.setText("")
-            mSharedPref.edit().clear().apply()
+            mSharedPref.clear(applicationContext)
         }
     }
 
     private fun mInitObjects() {
-        mSharedPref = getSharedPreferences(prefName , privateMode)
+        mSharedPref = SharedPreferenceInstance()
     }
 
     private fun mInitWidgets() {
