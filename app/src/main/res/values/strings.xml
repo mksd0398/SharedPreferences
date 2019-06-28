@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Intents</string>
+    <string name="hey_all">Hey !! all</string>
+    <string name="name">Name</string>
+    <string name="jump">Jump</string>
+    <string name="hey">Hey!!</string>
+    <string name="place">place</string>
+    <string name="preferences">preferences</string>
+    <string name="reset_preference">reset preference</string>
+</resources>
