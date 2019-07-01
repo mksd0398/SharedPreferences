@@ -1,25 +1,18 @@
 package com.example.sharedpreferences
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var mEtPreference: EditText
     private lateinit var mBtnReset: Button
-    private var privateMode = 0
-    private val prefValue = "truefalse"
-    private val prefName = "edittext"
-    private lateinit var mSharedPref: SharedPreferenceInstance
-
+    private val NAME: String = "name"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,8 +20,8 @@ class MainActivity : AppCompatActivity() {
         mInitWidgets()
         mInitObjects()
 
-        if(mSharedPref.getSomeStringValue(applicationContext) != null){
-            mEtPreference.setText(mSharedPref.getSomeStringValue(applicationContext))
+        if(SharedPreferenceInstance.getStringValue(NAME) != null){
+            mEtPreference.setText(SharedPreferenceInstance.getStringValue(NAME))
         }
 
         mEtPreference.addTextChangedListener(object : TextWatcher {
@@ -42,17 +35,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                mSharedPref.setSomeStringValue(applicationContext,"$s")
+                SharedPreferenceInstance.setStringValue("$s", NAME)
             }
         })
         mBtnReset.setOnClickListener{
             mEtPreference.setText("")
-            mSharedPref.clear(applicationContext)
+            SharedPreferenceInstance.clearAll()
         }
     }
 
     private fun mInitObjects() {
-        mSharedPref = SharedPreferenceInstance()
     }
 
     private fun mInitWidgets() {

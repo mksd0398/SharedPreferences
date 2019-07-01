@@ -5,28 +5,37 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
 
-class SharedPreferenceInstance {
+object SharedPreferenceInstance {
 
-    private val APP_SETTINGS = "APP_SETTINGS"
+    private val APP_PREF = "APP_PREF"
+    private lateinit var preferences: SharedPreferences
 
-    private val SOME_STRING_VALUE = "SOME_STRING_VALUE"
 
-    private fun getSharedPreferences(context: Context): SharedPreferences {
-        return context.getSharedPreferences(APP_SETTINGS, MODE_PRIVATE)
+    fun init(context: Context) {
+        preferences =  context.getSharedPreferences(APP_PREF, MODE_PRIVATE)
     }
 
-    fun getSomeStringValue(context: Context): String? {
-        return getSharedPreferences(context).getString(SOME_STRING_VALUE, null)
-    }
-
-    fun setSomeStringValue(context: Context, newValue: String) {
-        val editor = getSharedPreferences(context).edit()
-        editor.putString(SOME_STRING_VALUE, newValue)
+    private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit){
+        val editor = edit()
+        operation(editor)
         editor.apply()
     }
 
-    fun clear(context: Context) {
-        getSharedPreferences(context).edit().clear().apply()
+    fun getStringValue(preference: String): String? {
+        return preferences.getString(preference, null)
     }
 
+    fun setStringValue(newValue: String, preference: String) {
+        preferences.edit{
+            it.putString(preference, newValue)
+        }
+    }
+
+    fun clearAll(){
+        preferences.edit().clear().apply()
+    }
+    fun remove(preference: String){
+        preferences.edit().remove(preference).apply()
+    }
 }
+
