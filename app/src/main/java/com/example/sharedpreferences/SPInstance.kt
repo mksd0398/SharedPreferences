@@ -3,9 +3,10 @@ package com.example.sharedpreferences
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 
 
-object SharedPreferenceInstance {
+object SPInstance {
 
     private val APP_PREF = "APP_PREF"
     private lateinit var preferences: SharedPreferences
@@ -13,6 +14,7 @@ object SharedPreferenceInstance {
 
     fun init(context: Context) {
         preferences =  context.getSharedPreferences(APP_PREF, MODE_PRIVATE)
+        Log.i("SPInstance class : " , "prefrences init")
     }
 
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit){
@@ -56,8 +58,8 @@ object SharedPreferenceInstance {
 
 
     // for int
-    fun getIntValue(preference: String): Float? {
-        return preferences.getFloat(preference, 0.0f)
+    fun getIntValue(preference: String): Int? {
+        return preferences.getInt(preference, 0)
     }
 
     fun setIntValue(newValue: Int, preference: String) {

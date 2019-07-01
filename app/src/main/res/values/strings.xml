@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">Intents</string>
     <string name="hey_all">Hey !! all</string>
-    <string name="name">Name</string>
     <string name="jump">Jump</string>
     <string name="hey">Hey!!</string>
     <string name="place">place</string>
     <string name="preferences">preferences</string>
     <string name="reset_preference">reset preference</string>
+    <string name="reset_and_show">Reset and show</string>
+    <string name="set_and_show">Set and Show</string>
+
+    <string name="name_pref" >name</string>
+    <string name="age_pref">age</string>
+    <string name="phone_pref">phone</string>
+
 </resources>

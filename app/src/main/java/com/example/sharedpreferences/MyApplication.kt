@@ -1,11 +1,13 @@
 package com.example.sharedpreferences
 
 import android.app.Application
+import android.util.Log
 
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        SharedPreferenceInstance.init(applicationContext)
+        Log.i("application : " , "application launched")
+        SPInstance.init(applicationContext)
 
     }
 

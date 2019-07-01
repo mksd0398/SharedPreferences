@@ -2,17 +2,16 @@ package com.example.sharedpreferences
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
-import android.widget.EditText
+import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var mEtPreference: EditText
+    private lateinit var mTvDisplay: TextView
     private lateinit var mBtnReset: Button
-    private val NAME: String = "name"
+    private lateinit var mBtnSet: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,35 +19,50 @@ class MainActivity : AppCompatActivity() {
         mInitWidgets()
         mInitObjects()
 
-        if(SharedPreferenceInstance.getStringValue(NAME) != null){
-            mEtPreference.setText(SharedPreferenceInstance.getStringValue(NAME))
+        if(SPInstance.getStringValue(getString(R.string.name_pref)) != null) {
+            setValue()
         }
 
-        mEtPreference.addTextChangedListener(object : TextWatcher {
+        mBtnSet.setOnClickListener{
+            storeSharedPreferences()
+        }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
-
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                SharedPreferenceInstance.setStringValue("$s", NAME)
-            }
-        })
         mBtnReset.setOnClickListener{
-            mEtPreference.setText("")
-            SharedPreferenceInstance.clearAll()
+            removeAllPreferences()
         }
+
     }
 
     private fun mInitObjects() {
     }
 
     private fun mInitWidgets() {
-        mEtPreference = findViewById(R.id.xEtPlace)
+        mTvDisplay = findViewById(R.id.xTvDisplay)
         mBtnReset = findViewById(R.id.xBtnreset)
+        mBtnSet = findViewById(R.id.xBtnSet)
+    }
+
+    private fun storeSharedPreferences(){
+
+        if(SPInstance.getStringValue(getString(R.string.name_pref)) != null){
+            setValue()
+        }else{
+            SPInstance.setStringValue("Mayank" , getString(R.string.name_pref))
+            SPInstance.setIntValue(21 , getString(R.string.age_pref))
+            SPInstance.setLongValue(80507563728 , getString(R.string.phone_pref))
+            setValue()
+        }
+    }
+
+    private fun removeAllPreferences(){
+        SPInstance.clearAll()
+        setValue()
+    }
+
+    private fun setValue(){
+        val name : String?  = SPInstance.getStringValue(getString(R.string.name_pref))
+        val age : Int?  = SPInstance.getIntValue(getString(R.string.age_pref))
+        val phone : Long? = SPInstance.getLongValue(getString(R.string.phone_pref))
+        mTvDisplay.text = "$name \n $age \n $phone"
     }
 }

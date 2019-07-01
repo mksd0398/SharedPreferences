@@ -10,17 +10,24 @@
     android:padding="15dp"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/xEtPlace"
-        style="@style/editTextStyleBorderRed"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/xTvDisplay"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/preferences" />
+        style="@style/editTextStyleBorderBlue"/>
 
     <Button
         android:id="@+id/xBtnreset"
         style="@style/buttonTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/reset_preference" />
+        android:text="@string/reset_and_show" />
+
+    <Button
+        android:id="@+id/xBtnSet"
+        style="@style/buttonTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_and_show" />
+
 </LinearLayout>
