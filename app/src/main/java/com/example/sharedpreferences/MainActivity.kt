@@ -19,9 +19,8 @@ class MainActivity : AppCompatActivity() {
         mInitWidgets()
         mInitObjects()
 
-        if(SPInstance.getStringValue(getString(R.string.name_pref)) != null) {
-            setValue()
-        }
+        setValue()
+
 
         mBtnSet.setOnClickListener{
             storeSharedPreferences()
